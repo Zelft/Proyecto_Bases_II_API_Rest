@@ -20,4 +20,4 @@ const prodSchema = new Schema({
     }
 })
 
-export default model<IProduct>('Product', prodSchema)
+export default model<IProduct>('Product', prodSchema, 'productos')

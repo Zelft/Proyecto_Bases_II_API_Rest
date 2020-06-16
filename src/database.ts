@@ -6,14 +6,14 @@ const dbOptions: ConnectionOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
-};
+}
 
-mongoose.connect(config.DB.URI, dbOptions);
+mongoose.connect(config.DB.URI, dbOptions)
 
-const connection = mongoose.connection;
+const connection = mongoose.connection
 
 connection.once('open', () => {
-    console.log('Mongodb connection stablished');
+    console.log('Mongodb connection stablished')
 });
 
 connection.on('error', err => {
