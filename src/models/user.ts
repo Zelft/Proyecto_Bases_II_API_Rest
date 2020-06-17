@@ -33,9 +33,10 @@ userSchema.pre<IUser>('save', async function (next) {
 })
 
 userSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
-    return await bcrypt.compare(password, this.password) // recibe dos strings
+    return await bcrypt.compare(password, this.password)
+    // recibe dos strings
     // los compara y dice si son iguales
 }
 
-export default model<IUser>('User', userSchema)
+export default model<IUser>('User', userSchema, 'users')
 

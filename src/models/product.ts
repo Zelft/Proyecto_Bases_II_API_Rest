@@ -2,8 +2,8 @@ import { model, Schema, Document } from 'mongoose'
 
 export interface IProduct extends Document {
     name: string
-    loc: string
-    // comparePassword: (password: string ) => Promise<boolean>
+    loc: Number
+    productor: string
 }
 
 const prodSchema = new Schema({
@@ -11,11 +11,18 @@ const prodSchema = new Schema({
         type: String,
         unique: false,
         required: true,
-        lowercase: true,
+        lowercase: false,
+        trim: true
+    },
+    productor: {
+        type: String,
+        unique: false,
+        required: true,
+        lowercase: false,
         trim: true
     },
     loc: {
-        type: String,
+        type: Number,
         required: true
     }
 })
