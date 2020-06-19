@@ -35,7 +35,7 @@ export const getNearProducts = async ( req: Request , res: Response ): Promise<R
 }
 
 export const addProduct = async ( req: Request , res: Response ): Promise<Response> => {
-    console.log(req.body)
+    //console.log(req.body)
     if (!req.body.name || !req.body.loc || !req.body.productor) {
         return res.status(400).json({
             msg: 'Please. Send name, location and productor'
@@ -59,7 +59,6 @@ export const addProduct = async ( req: Request , res: Response ): Promise<Respon
 }
 
 function getCloserLocation(platitude:any,plongitude:any):Number{
-    
     let closer = Number.MAX_SAFE_INTEGER
     let distance
     var mapIter = myMap.keys()
@@ -70,20 +69,15 @@ function getCloserLocation(platitude:any,plongitude:any):Number{
         latitude:platitude,
         longitude:plongitude
     }
-
     for (let i = 0; i < 4; i++) {
         locationName=mapIter.next().value
-
         distance =haversine(start,{latitude:myMap.get(locationName).lat,longitude:myMap.get(locationName).long},{unit: 'km'})
-        
         console.log(distance)
-
         if(distance<closer){
             closer=distance
             zoneNumber=myMap.get(locationName).zoneNumb
         }    
     }
-
     return zoneNumber
 
 }

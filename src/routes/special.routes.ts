@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import passport from 'passport'
 import { findAll, addProduct, getNearProducts } from '../controllers/prod.controllers'
-import Product from '../models/product'
 
 const router = Router()
 
