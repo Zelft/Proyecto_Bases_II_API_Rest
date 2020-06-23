@@ -6,5 +6,4 @@ export default{
         USER: process.env.MONGODB_USER || '',
         PASSWORD: process.env.MONGODB_PASSWORD || ''
     }
-}
-// Duda, debe hacer uso de todos o de solo uno
+};
