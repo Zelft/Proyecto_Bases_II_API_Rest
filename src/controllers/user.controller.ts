@@ -1,11 +1,25 @@
 import { Request, Response } from 'express'
-import User, { IUser } from '../models/user'
-import jwt from 'jsonwebtoken'
-import config from '../config/config'
+import firebase from '../config/app.config'
 
-function createToken (user: IUser) {
-    return jwt.sign({id: user.id, email: user.email}, config.jwtSecret, {
-        expiresIn: 86400 // tells that this token expires in one day
+
+
+
+export const signOut = async (req: Request, res: Response): Promise<Response> => {
+    const user = firebase.auth().currentUser;
+
+    if (user == null){
+        return res.status(400).json({
+            msg: 'Cannot Logout. Not signed in.'
+        })
+    }
+    firebase.auth().signOut().then(function() {
+      }).catch(function(error) {
+        return res.status(400).json({
+            msg: error
+        })
+      })
+    return res.status(201).json({
+        msg: 'User successfully logged out',
     })
 }
 
@@ -19,15 +33,18 @@ export const signUp = async (req: Request, res: Response): Promise<Response> => 
         })
     }
 
-    const user = await User.findOne({email: email})
-    if (user) {
-        return res.status(400).json({msg: 'User already exists.'})
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .catch(function(error) {
+        // Handle Errors here.
+        const errorMessage = error.message
+        return res.status(201).json({
+            msg: 'An error occured: ' + errorMessage,
+        })
+        })
+    return res.status(201).json({
+        msg: 'User successfully created',
+    })
     }
-
-    const newUser = new User(req.body)
-    await newUser.save()
-    return res.status(201).json(newUser)
-}
 
 export const signIn = async (req: Request, res: Response) => {
     const email: string = req.body.email
@@ -39,17 +56,19 @@ export const signIn = async (req: Request, res: Response) => {
         })
     }
 
-    const user = await User.findOne({email: email})
-    if (!user) {
-        return res.status(400).json({msg: 'User does not exist.'})
-    }
-
-    const doesMatch  = await user.comparePassword(password)
-    if (doesMatch) {
-        return res.status(200).json({token: createToken(user)})
-    }
-
-    return res.status(400).json({
-        msg: 'Email and password are incorrect.'
+    firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
+    .then(() => {
+        console.log('Signed in!')
+        return res.status(200).json({
+            msg: 'Signed in successful!'
+        })
     })
+    .catch(function(error) {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        return res.status(400).json({
+            msg: 'Incorrect email and password. ' + errorMessage
+        })
+      })
 }

@@ -26,9 +26,8 @@ export const getNearProducts = async (req: Request, res: Response): Promise<Resp
     let zoneNumber: Number = 0
 
     const location = await Constants.find()
-    
     location.forEach(element => {
-        distance = haversine({latitude: req.body.latitude, longitude: req.body.longitude},{latitude: element.latitude, longitude: element.longitude})
+        distance = haversine({latitude: req.body.latitude, longitude: req.body.longitude}, {latitude: element.latitude, longitude: element.longitude})
         if (distance < closer) {
             closer = distance
             zoneNumber = element.id
