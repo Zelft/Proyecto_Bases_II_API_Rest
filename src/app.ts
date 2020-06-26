@@ -1,31 +1,26 @@
-import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import passport from 'passport';
-import authRoutes from './routes/auth.routes';
-import passportMiddelware from './middlewares/passport';
-import specialRoutes from './routes/special.routes';
+import express from 'express'
+import morgan from 'morgan'
+import cors from 'cors'
+import authRoutes from './routes/auth.routes'
+import specialRoutes from './routes/special.routes'
 
-//Initializations
-const app = express();
+// Initializations
+const app = express()
+// Settings
+app.set('port', process.env.PORT || 30001)
 
-//Settings
-app.set('port', process.env.PORT || 30001);
+// API Middlewares
+app.use(morgan('dev'))
+app.use(cors())
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
 
-// middlewares => modulos que necesita la aplicacion para funcionar
-app.use(morgan('dev'));
-app.use(cors());
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
-app.use(passport.initialize());
-passport.use(passportMiddelware);
-
-//routes
+// routes
 app.get('/', (req, res) => {
     res.send(`THE API is at http://localhost:${app.get('port')}`)
-});
+})
 
-app.use(authRoutes);
-app.use(specialRoutes);
+app.use(authRoutes)
+app.use(specialRoutes)
 
-export default app;
+export default app
