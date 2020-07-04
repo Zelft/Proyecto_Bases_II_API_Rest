@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import Product from '../models/product'
 import Constants from '../models/constants'
 
-const haversine = require('haversine')
+const haversine = require('haversine') // Calculates distance between 2 Geographic Coordinates 
 
 // API METHODS
 export const findAll = async (req: Request, res: Response): Promise<Response> => {

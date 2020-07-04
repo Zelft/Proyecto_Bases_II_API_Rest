@@ -10,10 +10,10 @@ const app = express()
 app.set('port', process.env.PORT || 30001)
 
 // API Middlewares
-app.use(morgan('dev'))
-app.use(cors())
-app.use(express.urlencoded({extended: false}))
-app.use(express.json())
+app.use(morgan('dev')) // Popular HTTP request middleware logger for Node. js, basically used as a logger
+app.use(cors()) // Uses additional HTTP headers allow access to selected routes from a different origin.
+app.use(express.urlencoded({extended: false})) // Only parses urlencoded bodies and only looks at requests where the Content-Type header matches the type option
+app.use(express.json()) // Express middleware that only parses json 
 
 // routes
 app.get('/', (req, res) => {

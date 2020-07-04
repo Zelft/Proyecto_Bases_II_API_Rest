@@ -4,7 +4,7 @@ export interface IProduct extends Document {
     name: string
     loc: Number
     productor: string
-};
+}
 
 const prodSchema = new Schema({
     name: {

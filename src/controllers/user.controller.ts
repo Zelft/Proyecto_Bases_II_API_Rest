@@ -5,7 +5,7 @@ import firebase from '../config/app.config'
 
 
 export const signOut = async (req: Request, res: Response): Promise<Response> => {
-    const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser
 
     if (user == null){
         return res.status(400).json({
