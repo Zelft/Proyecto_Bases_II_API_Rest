@@ -1,4 +1,4 @@
-import {MainServer} from './main'
+import {MainServer} from './server_handler'
 
 const server = new MainServer();
 
